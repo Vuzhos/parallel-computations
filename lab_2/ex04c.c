@@ -97,11 +97,11 @@ int main(int argc, char *argv[]) {
 
         if (mp>0){
             msg.n = 1; msg.buf[0] = sum;
-            msgsnd(msgid,&msg,sizeof(msg_t),0);
+            msgsnd(msgid, &msg, sizeof(msg_t) - sizeof(long), 0);
         }
         else{
             for (i=1;i<np;i++) {
-                msgrcv(msgid,&msg,sizeof(msg_t),0,0);
+                msgrcv(msgid,&msg, sizeof(msg_t) - sizeof(long), 0, 0);
                 sum = sum + msg.buf[0];
             }
             msgctl(msgid,IPC_RMID,(struct msqid_ds *)0);
